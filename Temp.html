@@ -1,0 +1,309 @@
+<html>
+    <head>
+        <style>
+            /* Add some basic styling for better appearance */
+                /* Style the container */
+                .container {
+                    display: flex;
+                    flex-direction: row;
+                    background-color: #777;
+                    color: white;
+                    cursor: pointer;
+                    padding: 18px;
+                    width: 100%;
+                    max-width: 500px; /* Maximum fixed width */
+                    text-align: left;
+                    border: none;
+                    outline: none;
+                    font-size: 15px;
+                }
+                /* Style the expanded content. This is hidden by default */
+                .content {
+                    display: none;
+                    overflow: hidden;
+                    padding: 20px;
+                    border: 1px solid #ccc;
+                    margin-top: 10px;
+                    width: 100%;
+                }
+                .accordion {
+                    margin: auto;
+                    width: 100%;
+                }
+                .accordion input {
+                    display: none;
+                }
+                .box {
+                    position: relative;
+                    background: white;
+                    height: auto;
+                    transition: all .15s ease-in-out;
+                }
+                .box::before {
+                    content: '';
+                    position: absolute;
+                    display: block;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    pointer-events: none;
+                    box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+                }
+                header.box {
+                    background-color: #bdd4e7;
+                    background-image: linear-gradient(315deg, #7ddcfd 0%, #000 74%);
+                    cursor: initial;
+                    box-shadow: 0 -1px 0 #e5e5e5,0 0 2px -2px rgba(0,0,0,.12),0 2px 4px -4px rgba(0,0,0,.24);
+                }
+                header .box-title {
+                    margin: 0;
+                    font-weight: normal;
+                    font-size: 16pt;
+                    color: white;
+                    cursor: initial;
+                }
+                .box-title {
+                    font-size:18;
+                    width: calc(100% - 40px);
+                    height: auto;
+                    line-height: 64px;
+                    padding: 0 20px;
+                    display: inline-block;
+                    cursor: pointer;
+                    -webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;
+                }
+                .box-content {
+                    width: calc(100% - 40px);
+                    padding: 30px 20px;
+                    font-size: 11pt;
+                    color: rgba(0,0,0,.54);
+                    display: none;
+                }
+                .box-close {
+                    position: absolute;
+                    height: 64px;
+                    width: 100%;
+                    top: 0;
+                    left: 0;
+                    cursor: pointer;
+                    display: none;
+                }
+                input:checked + .box {
+                    height: auto;
+                    margin: 16px 0;
+                    box-shadow: 0 0 6px rgba(0,0,0,.16),0 6px 12px rgba(0,0,0,.32);
+                }
+                input:checked + .box .box-title {
+                    border-bottom: 1px solid rgba(0,0,0,.18);
+                }
+                input:checked + .box .box-content,
+                input:checked + .box .box-close {
+                    display: inline-block;
+                }
+                .arrows section .box-title {
+                    padding-left: 44px;
+                    width: calc(100% - 64px);
+                    font-weight: bold;
+                }
+                .arrows section .box-title:before {
+                    position: absolute;
+                    display: block;
+                    content: '\203a';
+                    font-size: 20pt;
+                    left: 20px;
+                    top: -2px;
+                    transition: transform .15s ease-in-out;
+                    color: rgba(0,0,0,.54);
+                }
+                input:checked + section.box .box-title:before {
+                    transform: rotate(90deg);
+                }
+                .image_preview {
+                    z-index: 2;
+                    position: fixed;
+                    left: 50;
+                    top: 150;
+                    display: none;
+                    box-shadow: 0px 0px 15px #48f542;
+                }
+                .image_preview img{
+                    width: 70em;
+                }
+                .viewScreenshot:hover+.image_preview {
+                display: block;
+                }
+                .main_container {
+                    background: hsla(186, 33%, 94%, 1);
+                    background: linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+                    background: -moz-linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+                    background: -webkit-linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+                    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#EBF4F5", endColorstr="#B5C6E0", GradientType=1 );
+                    width: 70%;
+                    margin: auto;
+                    padding-bottom: 3%;
+                    border-radius: 25px;
+                    padding-top: 50px;
+                    position: relative;
+                    top: 70px;
+                    padding-right: 5%;
+                    padding-left: 5%;
+                    transform: translateX(0);
+                    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;	
+                }
+                .main_container.hidden {
+                    opacity: 0;
+                    pointer-events: none;
+                    transform: translateX(100%);
+                }
+                
+                .passedTitle {
+                background-image:linear-gradient(90deg, white 99.5%, green 0.5%);
+                }
+                .failedTitle {
+                background-image:linear-gradient(90deg, white 99.5%, red 0.5%);
+                }
+                .passedTitle:hover {
+                background-image:linear-gradient(90deg, white 99.25%, green 0.75%);
+                }
+                .failedTitle:hover {
+                background-image:linear-gradient(90deg, white 99.25%, red 0.75%);
+                }
+           
+                p {
+                    width: 80%;
+                    height: 20%;
+                    padding: 10px;
+                    border: 1px solid #3498db; 
+                    border-radius: 8px; 
+                    font-size: 14px;
+                    line-height: 1.6;
+                    margin-left: 8%;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+                    transition: border-color 0.3s ease-in-out; 
+                }
+                
+                p:hover,
+                p:focus {
+                    border-color: #1abc9c; 
+                }
+                
+                .header_table{
+                
+                width:100%; 
+                padding-left:4%;
+                padding-right:2%; 
+                padding-top:15px; 
+                padding-bottom:15px; 
+                background-image: linear-gradient(10deg, #024073, #0cb08b);
+                
+                }
+                .truncate {
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    -webkit-line-clamp: 1; /* Adjust the number of lines to display */
+                  }
+        
+            </style>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="index.js" type="text/javascript"></script>
+            </head>
+            <link rel='stylesheet' type='text/css' href='/style.css'>
+            </br>
+            <title>HTML REPORTING</title>
+            <body style='background-color: white;'>
+            <div id='headerDiv' style='height: 85px; width: 100%; background-image: linear-gradient(10deg, #024073, #0cb08b); position:fixed;top:0;left:0; z-index: 3;'>
+                <div id='header' >
+                    <img src='\Indium-Software-Logo.png' class='indiumLogoNew' width=auto height='75' />
+                    <img src='\client_logo.jpg' class='clientLogoNew' width=auto height='75' />
+                    <h1 style='color:white;text-align:center;'>IMPLAN - Big One Projects - Consolidated Report</h1>
+                </div>
+            </div>
+            <!-- Placeholder for projects -->
+            <div class='main_container'>
+                <nav class="accordion arrows" id='project_container'>
+                
+                <div class="popup">
+                    <div class="popup-content">
+                    </div>
+                </div>
+                <header class="box" style='background-image: linear-gradient(10deg, #024073, #0cb08b);'> 
+                    <label id='sprintName' for="acc-close" class="box-title" ></label> 
+                    </header>
+                <table class='header_table' >
+                    <tr style='color:white;'>
+                        <th style='width:10%; color:white;'>S. No.</th>
+                        <th style='width:50%; color:white;'>Projects</th>
+                        <th style='width:20%; color:white;'>Status</th>
+                        <th style='width:20%; color:white;'>Execution Date</th>
+                    </tr>
+                </table>               
+                <input type="radio" name="accordion" id="acc-close" />
+                </nav>
+            </div>
+            <script>
+
+                function generateHTML(project, index) {
+                    const statusColor = project["Project Status"] === "Fail" ? "red" : "green";
+                    const title = project["Project Status"] === "Fail" ? "failedTitle" : "passedTitle";
+                    const indexID = index;
+                    return `
+                    <input type="radio" name="accordion" id="cb${indexID}" />
+                    <section class="box">
+                        <label class="box-title ${title}" for="cb${indexID}">
+                        <table style='width:100%; padding-top:15px; padding-bottom:15px;'>
+                            <tr>
+                                <th style='width:10%; color:${statusColor};'>${indexID}</th>
+                                <th style='width:50%; color:${statusColor};text-align:left;'>${project["Project Name"]}</th>                               
+                                <th style='width:20%; color:${statusColor};'>${project["Project Status"]}</th>
+                                <th style='width:20%; color:${statusColor};'>${new Date().toLocaleDateString()}</th>
+                            </tr>
+                            </tr>
+                        </table>
+                        </label>
+                        <label class="box-close" for="acc-close"></label>
+                        <div class="box-content">
+                            <table class='stepsTable'>
+                                <tbody>
+                                    <tr>
+                                        <a href="${project["ProjectSummaryLink"]}">Summary Page</a>
+                                        <p>${project["Project Summary"].replace(/\n|\\n/g, '<br>')}</p>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>`;
+                }
+                var data =  {"Project_Details":[{"Project Name":"Scenario 1_Sprint 5.15.1_19-Dec-19-2016 Copy 2","Project Summary":"Values Mis-Match in Direct - Passing with 8 in most places, InDirect - Passing with 5 in few places, Induced - Passing with 5 in most places\\nHere are the Failing events:\\nEvent 1: Industry Output,\\nEvent 2: Industry Employment,\\nEvent 4: Industry Proprietor Income,\\nEvent 7: Commodity Output,\\nEvent 8a: Industry Employment","Project Status":"Fail","ProjectSummaryLink":"../../../output/Scenario_1_Sprint_5_15_1_19_Dec_19_2016_Copy_2/Event_report_20240222_121152/SummaryPage.html"},{"Project Name":"Scenario 3_Sprint 5.15.4_17-Jan-20_2018","Project Summary":"Values Mis-Match in Direct - NIL, InDirect - Passing with 1 in most places, Induced - Passing with 4 in few places\\nHere are the Failing events:\\nEvent 2: Industry Employment,\\nEvent 3: Industry Employee Compensation,\\nEvent 4: Industry Proprietor Income,\\nEvent 7: Commodity Output,\\nEvent 8a: Industry Employment","Project Status":"Fail","ProjectSummaryLink":"../../../output/Scenario_3_Sprint_5_15_4_17_Jan_20_2018/Event_report_20240222_121153/SummaryPage.html"}],"SprintName":"24.1.1"};
+                //handleJsonpData(data.Project_Details);
+                document.getElementById('sprintName').innerHTML = 'IMPLAN - Sprint '+ data.SprintName;
+                const container = document.getElementById("project_container"); // Assuming you have a container element in your HTML with id="container"
+                let serialNoCounter = 0;
+				data.Project_Details.forEach(project => {
+				    console.log(project);
+                    serialNoCounter += 1;
+                    container.innerHTML += generateHTML(project, serialNoCounter);
+                });
+            </script>
+            
+            <div class="checkbox-wrapper"  >
+                <table style='font-size: 16pt; width:15%; text-align: center;'>
+                    <tr>
+                        <td>
+                        <button id="scrollUpButton" onclick="scrollToTop()">
+                            <div id="arrowUp"></div>
+                        </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <button id="scrollDownButton" onclick="scrollToBottom()">
+                            <div id="arrowDown"></div>
+                        </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            </body>
+        </html>
