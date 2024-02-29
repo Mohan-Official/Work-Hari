@@ -103,68 +103,50 @@ function get_file_value(value)
     fetchDataAndDisplay(value);
 }
 
-function fetchData(projectType) {
-    console.log(File_Object);
-    var projectData = [
-        {
-            "Project_Details": [
-                {
-                    "Project Name": "Scenario 1_Sprint 5.15.1_19-Dec-19-2016 Copy 2",
-                    "Project Summary": "Values Mis-Match in Direct - NIL, InDirect - Passing with 6 in few places, Induced - Passing with 6 in few places\nHere are the Failing events:\nEvent 1: Industry Output,\nEvent 2: Industry Employment",
-                    "Project Status": "Fail",
-                    "ProjectSummaryLink": "../../../output/Scenario_1_Sprint_5_15_1_19_Dec_19_2016_Copy_2/Event_report_20240221_125448/SummaryPage.html"
-                },
-                {
-                  "Project Name": "Scenario 3_Sprint 5.15.4_17-Jan-20_2018",
-                  "Project Summary": "Values Mis-Match in Direct - NIL, InDirect - Passing with 1 in most places, Induced - Passing with 4 in few places\\nHere are the Failing events:\\nEvent 2: Industry Employment,\\nEvent 3: Industry Employee Compensation,\\nEvent 4: Industry Proprietor Income,\\nEvent 7: Commodity Output,\\nEvent 8a: Industry Employment",
-                  "Project Status": "Fail",
-                  "ProjectSummaryLink": "../../../output/Scenario_3_Sprint_5_15_4_17_Jan_20_2018/Event_report_20240222_121153/SummaryPage.html"
-                }
-            ],
-            "SprintName": "24.1.1",
-            "ProjectType": "Non MRIO"
-        },
-        {
-            "Project_Details": [
-                {
-                    "Project Name": "MRIO_Regression_Setup_2019",
-                    "Project Summary": "Values are passing in Direct - 14 digit in all places; Indirect - 14 digit in all places; Induced - 14 digit in all places.",
-                    "Project Status": "Pass",
-                    "ProjectSummaryLink": "../../../output/MRIO_Regression_Setup_2019/Event_report_20240221_125448/SummaryPage.html"
-                }
-            ],
-            "SprintName": "24.1.1",
-            "ProjectType": "MRIO"
+async function fetchData(File_address, projectType) {
+    try 
+    {
+        const response = await fetch(File_address);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    ];
-    var filteredProjects = projectData.filter(function(project) {
-        return project.ProjectType === projectType;
-    });
- 
-    displayProjects(filteredProjects);
+
+        const data = await response.json();
+
+        const project_array = [];
+        data["Entire Data"].forEach(item => {
+            if (item.ProjectType === projectType) {
+                item.Project_Details.forEach(project => {
+                    project_array.push(project);
+                });
+            }
+        });
+
+        displayProjects(project_array);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 }
 
 function displayProjects(projects) {
     var projectDetailsDiv = document.getElementById("generated_content");
     projectDetailsDiv.innerHTML = "";
 
-    projects.forEach(function(sprint) {
-        sprint.Project_Details.forEach(function(project, index) {
-            const projectHTML = generateHTML(project, index);
-            projectDetailsDiv.innerHTML += projectHTML;
-        });
+    projects.forEach(function(project, index) {
+        const projectHTML = generateHTML(project, index + 1);
+        projectDetailsDiv.innerHTML += projectHTML;
     });
 }
 
-function filter_MRIO(value)
-{
-    document.getElementById("generated_content").innerHTML='';
-    console.log(`cliked ${value}`);
-    fetchData(value);
+function filter_MRIO(value) {
+    document.getElementById("generated_content").innerHTML = '';
+    console.log(`clicked ${value}`);
+    fetchData(File_Object, value);
 }
 
-function filter_NON_MRIO(value)
-{
-    console.log(`cliked ${value}`);
-    fetchData(value);
+function filter_NON_MRIO(value) {
+    document.getElementById("generated_content").innerHTML = '';
+    console.log(`clicked ${value}`);
+    fetchData(File_Object, value);
 }
