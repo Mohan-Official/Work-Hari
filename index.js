@@ -14,4 +14,4 @@ app.get("/summary",(req,res)=>
 app.listen(port,()=>
 {
     console.log(`Server started at port number: ${port}`);
-})
+});

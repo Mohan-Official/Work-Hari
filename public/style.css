@@ -925,3 +925,58 @@ td {
 
 	transform: translate(-50%, -50%);
 }
+
+/* ///// Drop down box css code goes here........... */
+.version-title
+{
+	color: whitesmoke;
+	font-size: 1.5rem;
+}
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+/* Style for the dropdown button */
+#dropdown-btn {
+	/* padding: 20px; */
+	height: 3rem;
+	width: 15rem;
+	background-color: transparent;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	font-size: 1rem;
+	text-align: start;
+	font-size: 1.5rem;
+}
+
+/* Style for the dropdown content */
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	width: 10rem;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	font-size: 1rem;
+}
+
+/* Style for the dropdown items */
+.dropdown-item {
+	padding: 5px 10px;
+	display: block;
+	text-decoration: none;
+	color: #333;
+	cursor: pointer;
+}
+
+/* Change color on hover */
+.dropdown-item:hover {
+	background-color: #ddd;
+}
+
+/* Show/hide dropdown content on button click */
+.dropdown.active .dropdown-content {
+	display: block;
+}

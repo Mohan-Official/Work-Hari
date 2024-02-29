@@ -202,8 +202,10 @@
             -webkit-line-clamp: 1; /* Adjust the number of lines to display */
         }
     </style>
+    <script src="/functionality.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="index.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <script src="/index.js"></script> -->
     <link rel='stylesheet' type='text/css' href='/style.css'>
     <title>HTML REPORTING</title>
     </head>
@@ -219,14 +221,28 @@
         <!-- Placeholder for projects -->
         <div class='main_container'>
             <nav class="accordion arrows" id='project_container'>
-            
             <div class="popup">
                 <div class="popup-content">
                 </div>
             </div>
             <header class="box" style='background-image: linear-gradient(10deg, #024073, #0cb08b);'>
-                <label id='sprintName' for="acc-close" class="box-title" ></label>
-                </header>
+                <!-- //////// Placing Drop down box for selecting particular SprintName..... -->
+                <label id='sprintName' for="acc-close" class="box-title" >
+                    <div class="dropdown" onclick="toggleDropdown()">
+                        <label class="version-title">
+                            IMPLAN - 
+                        </label>
+                        <button id="dropdown-btn">Select Sprint Name</button>
+                        
+                        <div class="dropdown-content">
+                            <li href="#" class="dropdown-item" onclick="call_function(this)">24.1.1</li>
+                            <li href="#" class="dropdown-item" onclick="call_function(this)">24.1.2</li>
+                            <li href="#" class="dropdown-item" onclick="call_function(this)">24.1.3</li>
+                        </div>
+                    </div>
+                    
+                </label>
+            </header>
             <table class='header_table' >
                 <tr style='color:white;'>
                     <th style='width:10%; color:white;'>S. No.</th>
@@ -235,6 +251,9 @@
                     <th style='width:20%; color:white;'>Execution Date</th>
                 </tr>
             </table>              
+            <div id="generated_content">
+
+            </div>
             <input type="radio" name="accordion" id="acc-close" />
             </nav>
         </div>
@@ -260,6 +279,7 @@
 
         <script>
             // Function to generate HTML from project data
+        
             function generateHTML(project, index) 
             {
                 const statusColor = project["Project Status"] === "Fail" ? "red" : "green";
@@ -293,11 +313,12 @@
             }
         
             // Function to fetch data from JSON file and display it
-            async function fetchDataAndDisplay() 
+            async function fetchDataAndDisplay(file_address) 
             {
                 try 
                 {
-                const response = await fetch('consolidatedSummary_NON_MRIO_Projects.json');
+                // var file_value = get_file_value();
+                const response = await fetch(file_address);
                 //// It Checks whether Response status code is not in the range of 200-299
                 if (!response.ok) 
                 {
@@ -306,9 +327,9 @@
 
                 const data = await response.json();
         
-                document.getElementById('sprintName').innerHTML = 'IMPLAN - Sprint ' + data.SprintName;
-                const container = document.getElementById("project_container");
-        
+                // document.getElementById('sprintName').innerHTML = 'IMPLAN - Sprint ' + data.SprintName;
+                const container = document.getElementById("generated_content");
+
                 let serialNoCounter = 0;
                 data.Project_Details.forEach(project => 
                 {
@@ -321,9 +342,6 @@
                 console.error('Error fetching data:', error);
                 }
             }
-        
-            // Call the function to fetch and display data
-            fetchDataAndDisplay();
         </script>
     </body>
 </html>
