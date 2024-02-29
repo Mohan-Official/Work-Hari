@@ -41,7 +41,6 @@ async function fetchDataAndDisplay(file_address)
 {
     try 
     {
-    // var file_value = get_file_value();
     const response = await fetch(file_address);
     //// It Checks whether Response status code is not in the range of 200-299
     if (!response.ok) 
@@ -51,14 +50,14 @@ async function fetchDataAndDisplay(file_address)
 
     const data = await response.json();
 
-    // document.getElementById('sprintName').innerHTML = 'IMPLAN - Sprint ' + data.SprintName;
     const container = document.getElementById("generated_content");
 
     let serialNoCounter = 0;
-    data.Project_Details.forEach(project => 
-    {
-        serialNoCounter += 1;
-        container.innerHTML += generateHTML(project, serialNoCounter);
+    data["Entire Data"].forEach(item => {
+        item.Project_Details.forEach(project => {
+            serialNoCounter += 1;
+            container.innerHTML += generateHTML(project, serialNoCounter);
+        });
     });
     } 
     catch (error)
@@ -72,25 +71,92 @@ function call_function(option)
     var clicked_option = option.textContent;
     console.log(clicked_option);
     document.getElementById("dropdown-btn").textContent="Sprint "+clicked_option;
-    switch(clicked_option) {
-                case '24.1.1':
-                    document.getElementById("generated_content").innerHTML='';
-                    get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.1.json');
-                // alert('Option 1 selected!');
-                    break;
-                case '24.1.2':
-                    document.getElementById("generated_content").innerHTML='';
-                    get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.2.json');
-                    break;
-                case '24.1.3':
-                    document.getElementById("generated_content").innerHTML='';
-                    get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.3.json');
-                    break;
-                default:
-                    alert('Unknown option selected!');
-            }
+    switch(clicked_option) 
+    {
+        case '24.1.1':
+            document.getElementById("generated_content").innerHTML='';
+            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.1.json');
+        // alert('Option 1 selected!');
+            break;
+        case '24.1.2':
+            document.getElementById("generated_content").innerHTML='';
+            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.2.json');
+            break;
+        case '24.1.3':
+            document.getElementById("generated_content").innerHTML='';
+            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.3.json');
+            break;
+        case '24.1.4':
+            document.getElementById("generated_content").innerHTML='';
+            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.4.json');
+            break;
+        default:
+            alert('Unknown option selected!');
+    }
 }
+var File_Object;
+
 function get_file_value(value)
 {
+    File_Object = value;
     fetchDataAndDisplay(value);
+}
+
+function fetchData(projectType) {
+    var projectData = [
+        {
+            "Project_Details": [
+                {
+                    "Project Name": "Scenario 1_Sprint 5.15.1_19-Dec-19-2016 Copy 2",
+                    "Project Summary": "Values Mis-Match in Direct - NIL, InDirect - Passing with 6 in few places, Induced - Passing with 6 in few places\nHere are the Failing events:\nEvent 1: Industry Output,\nEvent 2: Industry Employment",
+                    "Project Status": "Fail",
+                    "ProjectSummaryLink": "../../../output/Scenario_1_Sprint_5_15_1_19_Dec_19_2016_Copy_2/Event_report_20240221_125448/SummaryPage.html"
+                }
+            ],
+            "SprintName": "24.1.1",
+            "ProjectType": "Non MRIO"
+        },
+        {
+            "Project_Details": [
+                {
+                    "Project Name": "MRIO_Regression_Setup_2019",
+                    "Project Summary": "Values are passing in Direct - 14 digit in all places; Indirect - 14 digit in all places; Induced - 14 digit in all places.",
+                    "Project Status": "Pass",
+                    "ProjectSummaryLink": "../../../output/MRIO_Regression_Setup_2019/Event_report_20240221_125448/SummaryPage.html"
+                }
+            ],
+            "SprintName": "24.1.1",
+            "ProjectType": "MRIO"
+        }
+    ];
+ 
+    var filteredProjects = projectData.filter(function(project) {
+        return project.ProjectType === projectType;
+    });
+ 
+    displayProjects(filteredProjects);
+}
+function displayProjects(projects) {
+    var projectDetailsDiv = document.getElementById("generated_content");
+    projectDetailsDiv.innerHTML = ""; // Clear previous content
+ 
+    projects.forEach(function(project) {
+        // var projectDiv = document.createElement("div");
+        projectDetailsDiv.innerHTML = "<h3>" + project.Project_Details[0]["Project Name"] + "</h3>" +
+                                "<p>Status: " + project.Project_Details[0]["Project Status"] + "</p>" +
+                                "<p>Summary: " + project.Project_Details[0]["Project Summary"] + "</p>" +
+                                "<a href='" + project.Project_Details[0]["ProjectSummaryLink"] + "'>View Details</a>";
+        // projectDetailsDiv.appendChild(projectDiv);
+    });
+}
+function filter_MRIO(value)
+{
+    document.getElementById("generated_content").innerHTML='';
+    console.log(`cliked ${value}`);
+    fetchData(value);
+}
+
+function filter_NON_MRIO(value)
+{
+    console.log(`cliked ${value}`);
 }

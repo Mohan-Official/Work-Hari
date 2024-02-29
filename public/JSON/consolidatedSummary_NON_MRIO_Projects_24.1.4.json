@@ -1,0 +1,37 @@
+{
+  "Entire Data":
+  [
+    {
+      "Project_Details": [
+        {
+          "Project Name": "Scenario 1_Sprint 5.15.1_19-Dec-19-2016 Copy 2",
+          "Project Summary": "Values Mis-Match in Direct - Passing with 8 in most places, InDirect - Passing with 5 in few places, Induced - Passing with 5 in most places\\nHere are the Failing events:\\nEvent 1: Industry Output,\\nEvent 2: Industry Employment,\\nEvent 4: Industry Proprietor Income,\\nEvent 7: Commodity Output,\\nEvent 8a: Industry Employment",
+          "Project Status": "Fail",
+          "ProjectSummaryLink": "../../../output/Scenario_1_Sprint_5_15_1_19_Dec_19_2016_Copy_2/Event_report_20240222_121152/SummaryPage.html"
+        },
+        {
+          "Project Name": "Scenario 3_Sprint 5.15.4_17-Jan-20_2018",
+          "Project Summary": "Values Mis-Match in Direct - NIL, InDirect - Passing with 1 in most places, Induced - Passing with 4 in few places\\nHere are the Failing events:\\nEvent 2: Industry Employment,\\nEvent 3: Industry Employee Compensation,\\nEvent 4: Industry Proprietor Income,\\nEvent 7: Commodity Output,\\nEvent 8a: Industry Employment",
+          "Project Status": "Fail",
+          "ProjectSummaryLink": "../../../output/Scenario_3_Sprint_5_15_4_17_Jan_20_2018/Event_report_20240222_121153/SummaryPage.html"
+        }
+      ],
+      "SprintName": "24.1.1",
+      "ProjectType": "Non MRIO"
+    },
+    {
+      "Project_Details": [
+        {
+          "Project Name": "MRIO_Regression_Setup_2019",
+          "Project Summary": "Values are passing in Direct - 14 digit in all places; Indirect - 14 digit in all places; Induced - 14 digit in all places.",
+          "Project Status": "Pass",
+          "ProjectSummaryLink": "../../../output/MRIO_Regression_Setup_2019/Event_report_20240221_125448/SummaryPage.html"
+        }
+      ],
+      "SprintName": "24.1.1",
+      "ProjectType": "MRIO"
+    }
+  ]
+}
+
+
