@@ -1,0 +1,205 @@
+/* Add some basic styling for better appearance */
+/* Style the container */
+.container {
+    display: flex;
+    flex-direction: row;
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    max-width: 500px; /* Maximum fixed width */
+    text-align: left;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+/* Style the expanded content. This is hidden by default */
+.content {
+    display: none;
+    overflow: hidden;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    width: 100%;
+}
+.accordion {
+    margin: auto;
+    width: 100%;
+}
+.accordion input {
+    display: none;
+}
+.box {
+    position: relative;
+    background: white;
+    height: auto;
+    transition: all .15s ease-in-out;
+}
+.box::before {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    box-shadow: 0 -1px 0 #e5e5e5,0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+}
+header.box {
+    background-color: #bdd4e7;
+    background-image: linear-gradient(315deg, #7ddcfd 0%, #000 74%);
+    cursor: initial;
+    box-shadow: 0 -1px 0 #e5e5e5,0 0 2px -2px rgba(0,0,0,.12),0 2px 4px -4px rgba(0,0,0,.24);
+}
+header .box-title {
+    margin: 0;
+    font-weight: normal;
+    font-size: 16pt;
+    color: white;
+    cursor: initial;
+}
+.box-title {
+    font-size:18;
+    width: calc(100% - 40px);
+    height: auto;
+    line-height: 64px;
+    padding: 0 20px;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;
+}
+.box-content {
+    width: calc(100% - 40px);
+    padding: 30px 20px;
+    font-size: 11pt;
+    color: rgba(0,0,0,.54);
+    display: none;
+}
+.box-close {
+    position: absolute;
+    height: 64px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    display: none;
+}
+input:checked + .box {
+    height: auto;
+    margin: 16px 0;
+    box-shadow: 0 0 6px rgba(0,0,0,.16),0 6px 12px rgba(0,0,0,.32);
+}
+input:checked + .box .box-title {
+    border-bottom: 1px solid rgba(0,0,0,.18);
+}
+input:checked + .box .box-content,
+input:checked + .box .box-close {
+    display: inline-block;
+}
+.arrows section .box-title {
+    padding-left: 44px;
+    width: calc(100% - 64px);
+    font-weight: bold;
+}
+.arrows section .box-title:before {
+    position: absolute;
+    display: block;
+    content: '\203a';
+    font-size: 20pt;
+    left: 20px;
+    top: -2px;
+    transition: transform .15s ease-in-out;
+    color: rgba(0,0,0,.54);
+}
+input:checked + section.box .box-title:before {
+    transform: rotate(90deg);
+}
+.image_preview {
+    z-index: 2;
+    position: fixed;
+    left: 50;
+    top: 150;
+    display: none;
+    box-shadow: 0px 0px 15px #48f542;
+}
+.image_preview img{
+    width: 70em;
+}
+.viewScreenshot:hover+.image_preview {
+display: block;
+}
+.main_container {
+    background: hsla(186, 33%, 94%, 1);
+    background: linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+    background: -moz-linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+    background: -webkit-linear-gradient(90deg, hsla(186, 33%, 94%, 1) 0%, hsla(216, 41%, 79%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#EBF4F5", endColorstr="#B5C6E0", GradientType=1 );
+    width: 70%;
+    margin: auto;
+    padding-bottom: 3%;
+    border-radius: 25px;
+    padding-top: 50px;
+    position: relative;
+    top: 70px;
+    padding-right: 5%;
+    padding-left: 5%;
+    transform: translateX(0);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;	
+}
+.main_container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+}
+
+.passedTitle {
+background-image:linear-gradient(90deg, white 99.5%, green 0.5%);
+}
+.failedTitle {
+background-image:linear-gradient(90deg, white 99.5%, red 0.5%);
+}
+.passedTitle:hover {
+background-image:linear-gradient(90deg, white 99.25%, green 0.75%);
+}
+.failedTitle:hover {
+background-image:linear-gradient(90deg, white 99.25%, red 0.75%);
+}
+
+p {
+    width: 80%;
+    height: auto; 
+    padding: 10px;
+    border: 1px solid #3498db; 
+    border-radius: 8px; 
+    font-size: 14px;
+    line-height: 1.6;
+    margin-left: 8%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    transition: border-color 0.3s ease-in-out; 
+}
+
+p:hover,
+p:focus {
+    border-color: #1abc9c; 
+}
+
+.header_table{
+
+width:100%; 
+padding-left:4%;
+padding-right:2%; 
+padding-top:15px; 
+padding-bottom:15px; 
+background-image: linear-gradient(10deg, #024073, #0cb08b);
+
+}
+.truncate {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 1; /* Adjust the number of lines to display */
+}
+
+
