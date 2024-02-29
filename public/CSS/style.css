@@ -936,12 +936,11 @@ td {
 	position: relative;
 	display: inline-block;
 }
-
 /* Style for the dropdown button */
 #dropdown-btn {
 	/* padding: 20px; */
 	height: 3rem;
-	width: 15rem;
+	width: 17rem;
 	background-color: transparent;
 	color: #fff;
 	border: none;
@@ -949,14 +948,22 @@ td {
 	font-size: 1rem;
 	text-align: start;
 	font-size: 1.5rem;
+	/* background-color: #00a97f; */
 }
-
+.fa-angle-down
+{
+	color: whitesmoke;
+	font-size: 1.2rem;
+	position: relative;
+	left: -10%;
+	cursor: pointer;
+}
 /* Style for the dropdown content */
 .dropdown-content {
 	display: none;
 	position: absolute;
-	background-color: #f9f9f9;
-	width: 10rem;
+	background-color: #05617a;
+	width: 20rem;
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 	font-size: 1rem;
@@ -967,13 +974,16 @@ td {
 	padding: 5px 10px;
 	display: block;
 	text-decoration: none;
-	color: #333;
+	color: whitesmoke;
 	cursor: pointer;
+	font-weight: bolder;
+	text-align: center;
+	letter-spacing: 2px;
 }
 
 /* Change color on hover */
 .dropdown-item:hover {
-	background-color: #ddd;
+	background-color: #088181;
 }
 
 /* Show/hide dropdown content on button click */
