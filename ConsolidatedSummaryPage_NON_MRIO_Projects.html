@@ -24,21 +24,27 @@
         </div>
         <header class="box" style='background-image: linear-gradient(10deg, #024073, #0cb08b);'>
             <!-- //////// Placing Drop down box for selecting particular SprintName..... -->
-            <label id='sprintName' for="acc-close" class="box-title" >
-                <div class="dropdown" onclick="toggleDropdown()">
-                    <label class="version-title">
-                        IMPLAN - 
-                    </label>
-                    <button id="dropdown-btn">Select Sprint Name </button>
-                    <i class="fa-solid fa-angle-down"></i>
-                    <div class="dropdown-content">
-                        <li href="#" class="dropdown-item" onclick="call_function(this)">24.1.1</li>
-                        <li href="#" class="dropdown-item" onclick="call_function(this)">24.1.2</li>
-                        <li href="#" class="dropdown-item" onclick="call_function(this)">24.1.3</li>
+            <!-- <label id='sprintName' for="acc-close" class="box-title" > -->
+                <section id="filter-section" class="box-title">
+                    <div class="dropdown" onclick="toggleDropdown()">
+                        <label class="version-title">
+                            IMPLAN - 
+                        </label>
+                        <button id="dropdown-btn">Select Sprint Name </button>
+                        <i class="fa-solid fa-angle-down"></i>
+                        <div class="dropdown-content">
+                            <li href="#" class="dropdown-item" onclick="call_function(this)">24.1.1</li>
+                            <li href="#" class="dropdown-item" onclick="call_function(this)">24.1.2</li>
+                            <li href="#" class="dropdown-item" onclick="call_function(this)">24.1.3</li>
+                        </div>
                     </div>
-                </div>
+                    <div id="button-div">
+                        <button class="button btn-one" onclick="filter_MRIO()">MRIO</button>
+                        <button class="button btn-two" onclick="filter_NON_MRIO()">NON-MRIO</button>
+                    </div>
+                </section>
                 
-            </label>
+            <!-- </label> -->
         </header>
         <table class='header_table' >
             <tr style='color:white;'>
