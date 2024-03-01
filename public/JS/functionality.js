@@ -3,6 +3,17 @@ function toggleDropdown()
     var dropdown = document.querySelector('.dropdown');
     dropdown.classList.toggle('active');
 }
+function toggleDateDropdown() 
+{
+    var dropdown = document.querySelector('.date-dropdown');
+    dropdown.classList.toggle('active');
+}
+document.addEventListener('click', function (event) {
+    if (!event.target.closest('.dropdown') && !event.target.closest('.date-dropdown')) {
+        document.querySelector('.dropdown.active')?.classList.remove('active');
+        document.querySelector('.date-dropdown.active')?.classList.remove('active');
+    }
+});
 
 function generateHTML(project, index) 
 {
@@ -19,7 +30,7 @@ function generateHTML(project, index)
             <th style='width:10%; color:${statusColor};'>${indexID}</th>
             <th style='width:50%; color:${statusColor};text-align:left;'>${project["Project Name"]}</th>
             <th style='width:20%; color:${statusColor};'>${project["Project Status"]}</th>
-            <th style='width:20%; color:${statusColor};'>${new Date().toLocaleDateString()}</th>
+            <th style='width:20%; color:${statusColor};'>${project["Project Date"]}</th>
             </tr>
         </table>
         </label>
@@ -36,7 +47,8 @@ function generateHTML(project, index)
         </div>
     </section>`;
 }
-        
+
+const Generated_Total_Date_Array = new Set();
 // Function to fetch data from JSON file and display it
 async function fetchDataAndDisplay(file_address) 
 {
@@ -54,12 +66,16 @@ async function fetchDataAndDisplay(file_address)
     const container = document.getElementById("generated_content");
 
     let serialNoCounter = 0;
+    Generated_Total_Date_Array.clear();
     data["Entire Data"].forEach(item => {
         item.Project_Details.forEach(project => {
             serialNoCounter += 1;
+            // console.log(project["Project Date"]);
+            Generated_Total_Date_Array.add(project["Project Date"]);
             container.innerHTML += generateHTML(project, serialNoCounter);
         });
     });
+    DisplayDate();
     } 
     catch (error)
     {
@@ -91,6 +107,18 @@ function call_function(option)
             document.getElementById("generated_content").innerHTML='';
             get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.4.json');
             break;
+        case '24.1.5':
+            document.getElementById("generated_content").innerHTML='';
+            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.5.json');
+            break;
+        case '24.1.6':
+            document.getElementById("generated_content").innerHTML='';
+            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.6.json');
+            break;
+        case '24.1.7':
+            document.getElementById("generated_content").innerHTML='';
+            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.7.json');
+            break;
         default:
             alert('Unknown option selected!');
     }
@@ -113,17 +141,20 @@ async function fetchData(File_address, projectType) {
         }
 
         const data = await response.json();
-
+        Generated_Total_Date_Array.clear();
         const project_array = [];
         data["Entire Data"].forEach(item => {
             if (item.ProjectType === projectType) {
                 item.Project_Details.forEach(project => {
+                    Generated_Total_Date_Array.add(project["Project Date"]);
                     project_array.push(project);
                 });
             }
         });
 
         displayProjects(project_array);
+        DisplayDate();
+        console.log(project_array);
     } catch (error) {
         console.error('Error fetching data:', error);
     }
@@ -139,7 +170,8 @@ function displayProjects(projects) {
     });
 }
 
-function filter_MRIO(value) {
+function filter_MRIO(value) 
+{
     document.getElementById("generated_content").innerHTML = '';
     console.log(`clicked ${value}`);
     fetchData(File_Object, value);
@@ -150,3 +182,56 @@ function filter_NON_MRIO(value) {
     console.log(`clicked ${value}`);
     fetchData(File_Object, value);
 }
+
+function remove_filter()
+{
+    document.getElementById("generated_content").innerHTML = '';
+    console.log("remove filter");
+    fetchDataAndDisplay(File_Object);
+}
+function DisplayDate() {
+    const dateDropdownContent = document.querySelector('.date-dropdown-content');
+    dateDropdownContent.innerHTML = '';
+    for (const dateField of Generated_Total_Date_Array)
+    {
+        const li = document.createElement('li');
+        // console.log(Generated_Total_Date_Array[dateField]);
+        console.log(dateField);
+        li.textContent = dateField; 
+        li.classList.add("date-dropdown-item");
+        dateDropdownContent.appendChild(li);
+        li.addEventListener('click', function() {
+            displayDataForDate(File_Object,dateField);
+        });
+    }
+}
+
+// async function displayDataForDate(File_address, date_value) {
+//     try 
+//     {
+//         const response = await fetch(File_address);
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+
+//         const data = await response.json();
+//         Generated_Total_Date_Array.clear();
+//         const project_array = [];
+//         data["Entire Data"].forEach(item => {
+//             if (item.ProjectType === projectType) {
+//                 item.Project_Details.forEach(project => {
+//                     Generated_Total_Date_Array.add(project["Project Date"]);
+//                     project_array.push(project);
+//                 });
+//             }
+//         });
+
+//         displayProjects(project_array);
+//         DisplayDate();
+//         console.log(project_array);
+//     } catch (error) {
+//         console.error('Error fetching data:', error);
+//     }
+// }
+document.addEventListener('DOMContentLoaded', DisplayDate);

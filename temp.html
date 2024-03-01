@@ -1,47 +1,69 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>Date Fields Drop-down</title>
 </head>
 <body>
-    <div id="generated_content">
-
+    <div id="app">
+        <label for="dateField">Select Date Field:</label>
+        <select id="dateField"></select>
     </div>
-    <script>
-        function generateHTML(project) 
-        {
-            const statusColor = project["Project Status"] === "Fail" ? "red" : "green";
-            const title = project["Project Status"] === "Fail" ? "failedTitle" : "passedTitle";
-            const indexID = index;
-
-            return `
-            <input type="radio" name="accordion" id="cb${indexID}" />
-            <section class="box">
-                <label class="box-title ${title}" for="cb${indexID}">
-                <table style='width:100%; padding-top:15px; padding-bottom:15px;'>
-                    <tr>
-                    <th style='width:10%; color:${statusColor};'>${indexID}</th>
-                    <th style='width:50%; color:${statusColor};text-align:left;'>${project["Project Name"]}</th>
-                    <th style='width:20%; color:${statusColor};'>${project["Project Status"]}</th>
-                    <th style='width:20%; color:${statusColor};'>${new Date().toLocaleDateString()}</th>
-                    </tr>
-                </table>
-                </label>
-                <label class="box-close" for="acc-close"></label>
-                <div class="box-content">
-                <table class='stepsTable'>
-                    <tbody>
-                    <tr>
-                        <a href="${project["ProjectSummaryLink"]}">Summary Page</a>
-                        <p>${project["Project Summary"].replace(/\n|\\n/g, '<br>')}</p>
-                    </tr>
-                    </tbody>
-                </table>
-                </div>
-            </section>`;
+    <script >
+document.addEventListener("DOMContentLoaded", function () {
+    // Assuming your JSON data is stored in a variable named jsonData
+    const jsonData = {
+        "dateField1": "2022-01-01",
+        "dateField2": "2022-02-01",
+        "dateField3": "2022-01-01",
+        "dateField4": "2022-04-01",
+        "dateField2": "2022-02-01",
+        "dateField3": "2022-01-01", // Example with a duplicate date
+        // Add more date fields as needed
+    };
+ 
+    const dateFieldDropdown = document.getElementById("dateField");
+    const uniqueDates = new Set();
+ 
+    // Populate drop-down options with unique dates
+    for (const dateField in jsonData) {
+        if (jsonData.hasOwnProperty(dateField)) {
+            const currentDate = jsonData[dateField];
+ 
+            if (!uniqueDates.has(currentDate)) {
+                const option = document.createElement("option");
+                option.value = currentDate;
+                option.text = currentDate;
+                dateFieldDropdown.add(option);
+                uniqueDates.add(currentDate);
+            }
         }
-        document.getElementById("generateHTML").innerHTML += generateHTML(project);
+    }
+ 
+    // Event listener for date selection
+    dateFieldDropdown.addEventListener("change", function () {
+        const selectedDate = dateFieldDropdown.value;
+        displayDataForDate(selectedDate);
+    });
+ 
+    // Function to display data for the selected date
+    function displayDataForDate(selectedDate) {
+        // Assuming you have an element with the id "dataDisplay" to show the data
+        const dataDisplay = document.getElementById("dataDisplay");
+        dataDisplay.innerHTML = ""; // Clear previous data
+ 
+        // Loop through jsonData and display data for the selected date
+        for (const dateField in jsonData) {
+            if (jsonData.hasOwnProperty(dateField) && jsonData[dateField] === selectedDate) {
+                const dataItem = document.createElement("p");
+                dataItem.textContent = `${dateField}: ${jsonData[dateField]}`;
+                dataDisplay.appendChild(dataItem);
+            }
+        }
+    }
+});
     </script>
 </body>
 </html>
