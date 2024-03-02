@@ -22,6 +22,7 @@ async function readJsonFile(fileAddress)
             li.onclick = function() 
             {
                 File_Object = item["FilePath"];
+                document.getElementById("dropdown-btn").textContent="SPRINT - "+item["SprintName"];
                 fetchDataAndDisplay(item["FilePath"]);
             };
             container.appendChild(li);
@@ -183,11 +184,6 @@ function DisplayDate() {
     const dateDropdownContent = document.querySelector('.date-dropdown-content');
     dateDropdownContent.innerHTML = ''; 
 
-    // const btn = document.createElement('button');
-    // btn.textContent='Click to Filter'
-    // btn.classList.add('date_btn')
-    // dateDropdownContent.appendChild(btn);
-
     for (const dateField of Generated_Total_Date_Set) {
         const li = document.createElement('li');
         li.textContent = dateField;
@@ -198,6 +194,13 @@ function DisplayDate() {
             displayDataForDate(File_Object, dateField);
         });
     }
+    //  const btn = document.createElement('div');
+    // // btn.textContent='Click to Filter'
+    // const inp = document.createElement("input");
+    // inp.textContent="hlop";
+    // btn.appendChild(inp);
+    // btn.classList.add('date_btn')
+    // dateDropdownContent.appendChild(btn);
 }
 
 
