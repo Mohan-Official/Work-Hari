@@ -987,6 +987,14 @@ td {
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 	z-index: 1;
 	font-size: 1rem;
+	max-height: 150px;
+    overflow-y: auto;
+  	scrollbar-color: #0a9f82 #05617a; 
+}
+.dropdown-content::-webkit-scrollbar-thumb 
+{
+	background-color: #3498db;
+	border-radius: 10px;
 }
 .date-dropdown-content
 {
@@ -1051,4 +1059,10 @@ td {
 #button-div .btn-two
 {
 	width: 7rem;
+}
+/* ////Date filter btn//// */
+.date_btn
+{
+	height: 2rem;
+	width: 100%;	
 }

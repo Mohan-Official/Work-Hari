@@ -1,3 +1,39 @@
+var File_Object;
+async function readJsonFile(fileAddress) 
+{
+    try 
+    {
+        const response = await fetch(fileAddress);
+        if (!response.ok) 
+        {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const container = document.getElementById("dropdown-content");
+        container.innerHTML = ''; 
+
+        data["Summary Data"].forEach(item => 
+        {
+            const li = document.createElement('li');
+            li.className = "dropdown-item";
+            li.textContent = item["SprintName"];
+
+            li.onclick = function() 
+            {
+                File_Object = item["FilePath"];
+                fetchDataAndDisplay(item["FilePath"]);
+            };
+            container.appendChild(li);
+        });
+    } 
+    catch (error) 
+    {
+        console.error('Error fetching data:', error);
+    }
+}
+readJsonFile("JSON/Sample.json");
+
 function toggleDropdown() {
     var dropdown = document.querySelector('.dropdown');
     dropdown.classList.toggle('active');
@@ -50,7 +86,6 @@ function generateHTML(project, index) {
 }
 
 const Generated_Total_Date_Set = new Set();
-
 async function fetchDataAndDisplay(file_address) {
     try {
         const response = await fetch(file_address);
@@ -60,7 +95,7 @@ async function fetchDataAndDisplay(file_address) {
         }
 
         const data = await response.json();
-
+        console.log(data);
         const container = document.getElementById("generated_content");
         container.innerHTML = ''; // Clear previous content
 
@@ -81,46 +116,6 @@ async function fetchDataAndDisplay(file_address) {
     }
 }
 
-function call_function(option) {
-    var clicked_option = option.textContent;
-    console.log(clicked_option);
-    document.getElementById("dropdown-btn").textContent = "Sprint " + clicked_option;
-
-    switch (clicked_option) {
-        case '24.1.1':
-            document.getElementById("generated_content").innerHTML = '';
-            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.1.json');
-            break;
-        case '24.1.2':
-            document.getElementById("generated_content").innerHTML = '';
-            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.2.json');
-            break;
-        case '24.1.3':
-            document.getElementById("generated_content").innerHTML = '';
-            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.3.json');
-            break;
-        case '24.1.4':
-            document.getElementById("generated_content").innerHTML = '';
-            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.4.json');
-            break;
-        case '24.1.5':
-            document.getElementById("generated_content").innerHTML = '';
-            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.5.json');
-            break;
-        case '24.1.6':
-            document.getElementById("generated_content").innerHTML = '';
-            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.6.json');
-            break;
-        case '24.1.7':
-            document.getElementById("generated_content").innerHTML = '';
-            get_file_value('JSON/consolidatedSummary_NON_MRIO_Projects_24.1.7.json');
-            break;
-        default:
-            alert('Unknown option selected!');
-    }
-}
-
-var File_Object;
 
 function get_file_value(value) {
     File_Object = value;
@@ -186,7 +181,12 @@ function remove_filter() {
 
 function DisplayDate() {
     const dateDropdownContent = document.querySelector('.date-dropdown-content');
-    dateDropdownContent.innerHTML = '';
+    dateDropdownContent.innerHTML = ''; 
+
+    // const btn = document.createElement('button');
+    // btn.textContent='Click to Filter'
+    // btn.classList.add('date_btn')
+    // dateDropdownContent.appendChild(btn);
 
     for (const dateField of Generated_Total_Date_Set) {
         const li = document.createElement('li');
@@ -199,6 +199,7 @@ function DisplayDate() {
         });
     }
 }
+
 
 async function displayDataForDate(File_address, date_value) {
     try 

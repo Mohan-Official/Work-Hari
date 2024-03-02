@@ -1,68 +1,95 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Date Fields Drop-down</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #date-picker-btn {
+
+background-color: #f0f0f0;
+
+border: 1px solid #ccc;
+
+color: #333;
+
+padding: 8px 12px;
+
+cursor: pointer;
+
+}
+
+/* Style for date picker input field */
+
+#date-picker {
+
+display: none; /* Initially hidden */
+
+padding: 8px 12px;
+
+border: 1px solid #ccc;
+
+margin-top: 5px;
+
+width: 200px;
+}
+  </style>
 </head>
 <body>
-    <div id="app">
-        <label for="dateField">Select Date Field:</label>
-        <select id="dateField"></select>
+  <div class="date-dropdown">
+
+    <button id="date-picker-btn">Select Date</button>
+    
+    <input type="date" id="date-picker" placeholder="Selected Date" style="display: none;">
+    
+    <ul class="date-dropdown-content">
+    
+    <!-- Date items will be populated here dynamically -->
+    
+    </ul>
+    
+    <table>
+      <tr>
+        <input type="date" name="" id="">
+      </tr>
+      <tr>
+        <button>
+          <input type="date" name="" id="">
+        </button>
+      </tr>
+    </table>
     </div>
-    <script >
-document.addEventListener("DOMContentLoaded", function () {
-    // Assuming your JSON data is stored in a variable named jsonData
-    const jsonData = {
-        "dateField1": "2022-01-01",
-        "dateField2": "2022-02-01",
-        "dateField3": "2022-01-01",
-        "dateField4": "2022-04-01",
-        "dateField2": "2022-02-01",
-        "dateField3": "2022-01-01", // Example with a duplicate date
-        // Add more date fields as needed
-    };
- 
-    const dateFieldDropdown = document.getElementById("dateField");
-    const uniqueDates = new Set();
- 
-    // Populate drop-down options with unique dates
-    for (const dateField in jsonData) {
-        if (jsonData.hasOwnProperty(dateField)) {
-            const currentDate = jsonData[dateField];
- 
-            if (!uniqueDates.has(currentDate)) {
-                const option = document.createElement("option");
-                option.value = currentDate;
-                option.text = currentDate;
-                dateFieldDropdown.add(option);
-                uniqueDates.add(currentDate);
-            }
-        }
-    }
- 
-    // Event listener for date selection
-    dateFieldDropdown.addEventListener("change", function () {
-        const selectedDate = dateFieldDropdown.value;
-        displayDataForDate(selectedDate);
-    });
- 
-    // Function to display data for the selected date
-    function displayDataForDate(selectedDate) {
-        // Assuming you have an element with the id "dataDisplay" to show the data
-        const dataDisplay = document.getElementById("dataDisplay");
-        dataDisplay.innerHTML = ""; // Clear previous data
- 
-        // Loop through jsonData and display data for the selected date
-        for (const dateField in jsonData) {
-            if (jsonData.hasOwnProperty(dateField) && jsonData[dateField] === selectedDate) {
-                const dataItem = document.createElement("p");
-                dataItem.textContent = `${dateField}: ${jsonData[dateField]}`;
-                dataDisplay.appendChild(dataItem);
-            }
-        }
-    }
+
+    <script>
+
+
+// Add click event listener to date picker button
+
+document.getElementById("date-picker-btn").addEventListener('click', function() {
+
+// Show date picker input field
+
+document.getElementById("date-picker").style.display = "block";
+
+// Initialize flatpickr
+
+flatpickr('#date-picker', {
+
+dateFormat: 'd/m/Y', // Set date format to DD/MM/YYYY
+
+onClose: function(selectedDates, dateStr, instance) {
+
+// Callback when a date is selected
+
+displayDataForDate(File_Object, dateStr);
+
+// Hide date picker input field after selection
+
+document.getElementById("date-picker").style.display = "none";
+
+}
+
+});
+
 });
     </script>
 </body>
