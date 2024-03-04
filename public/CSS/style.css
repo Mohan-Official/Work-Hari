@@ -1011,8 +1011,12 @@ td {
 	font-weight: bolder;
 	text-align: center;
 	letter-spacing: 2px;
+	font-size: 1rem;
 }
-
+.date-dropdown-item 
+{
+	font-size: 0.8rem;
+}
 /* Change color on hover */
 .dropdown-item:hover,.date-dropdown-item:hover {
 	background-color: #088181;
@@ -1061,8 +1065,29 @@ td {
 	width: 7rem;
 }
 /* ////Date filter btn//// */
-.date_btn
+#datePicker
 {
 	height: 2rem;
-	width: 100%;	
+	width: 100%;
+	background-color: #09917a;
+	color: whitesmoke;
+	outline: 0;
+	border: none;
+	text-align: center;
+	cursor: pointer;
+}
+#no-record-element
+{
+	display: none;
+	text-align: center;
+}
+.iconStyle
+{
+	content: '\1F4C6'; /* Unicode for calendar icon
+      /* position: absolute; */
+      /* top: 50%; */
+      /* right: 10px;  */
+      /* transform: translateY(-50%); */
+      /* font-size: 20px; */
+	color: whitesmoke;
 }

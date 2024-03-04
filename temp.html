@@ -4,93 +4,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    #date-picker-btn {
-
-background-color: #f0f0f0;
-
-border: 1px solid #ccc;
-
-color: #333;
-
-padding: 8px 12px;
-
-cursor: pointer;
-
-}
-
-/* Style for date picker input field */
-
-#date-picker {
-
-display: none; /* Initially hidden */
-
-padding: 8px 12px;
-
-border: 1px solid #ccc;
-
-margin-top: 5px;
-
-width: 200px;
-}
+    #datePicker::after {
+      content: '\1F4C6'; /* Unicode for calendar icon */
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      font-size: 780px;
+      /* color: #your-desired-color; Replace with your desired color */
+    }
   </style>
 </head>
 <body>
-  <div class="date-dropdown">
-
-    <button id="date-picker-btn">Select Date</button>
-    
-    <input type="date" id="date-picker" placeholder="Selected Date" style="display: none;">
-    
-    <ul class="date-dropdown-content">
-    
-    <!-- Date items will be populated here dynamically -->
-    
-    </ul>
-    
-    <table>
-      <tr>
-        <input type="date" name="" id="">
-      </tr>
-      <tr>
-        <button>
-          <input type="date" name="" id="">
-        </button>
-      </tr>
-    </table>
-    </div>
-
-    <script>
-
-
-// Add click event listener to date picker button
-
-document.getElementById("date-picker-btn").addEventListener('click', function() {
-
-// Show date picker input field
-
-document.getElementById("date-picker").style.display = "block";
-
-// Initialize flatpickr
-
-flatpickr('#date-picker', {
-
-dateFormat: 'd/m/Y', // Set date format to DD/MM/YYYY
-
-onClose: function(selectedDates, dateStr, instance) {
-
-// Callback when a date is selected
-
-displayDataForDate(File_Object, dateStr);
-
-// Hide date picker input field after selection
-
-document.getElementById("date-picker").style.display = "none";
-
-}
-
-});
-
-});
-    </script>
+  <input type="date" name="" id="datePicker">
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 var File_Object;
 async function readJsonFile(fileAddress) 
 {
@@ -184,6 +185,21 @@ function DisplayDate() {
     const dateDropdownContent = document.querySelector('.date-dropdown-content');
     dateDropdownContent.innerHTML = ''; 
 
+    const inp = document.createElement("input");
+    inp.type='date';
+    inp.style.cssText='display:block';
+    inp.setAttribute('id','datePicker');
+    inp.classList.add('iconStyle');
+    dateDropdownContent.appendChild(inp);
+    // under work
+    // inp.addEventListener('click',()=>{confirm("hi")})
+    /// under work
+    inp.addEventListener('change', function () {
+        var dateValue = inp.value;
+        console.log(formatInputDate(dateValue));
+        showSelectedDateItems(formatInputDate(dateValue))
+    });
+
     for (const dateField of Generated_Total_Date_Set) {
         const li = document.createElement('li');
         li.textContent = dateField;
@@ -194,15 +210,7 @@ function DisplayDate() {
             displayDataForDate(File_Object, dateField);
         });
     }
-    //  const btn = document.createElement('div');
-    // // btn.textContent='Click to Filter'
-    // const inp = document.createElement("input");
-    // inp.textContent="hlop";
-    // btn.appendChild(inp);
-    // btn.classList.add('date_btn')
-    // dateDropdownContent.appendChild(btn);
 }
-
 
 async function displayDataForDate(File_address, date_value) {
     try 
@@ -228,6 +236,40 @@ async function displayDataForDate(File_address, date_value) {
         displayProjects(date_match_array);
     } catch (error) {
         console.error('Error fetching data:', error);
+    }
+}
+
+function formatInputDate(inputDate) 
+{
+    const dateObj = new Date(inputDate);
+    const day = dateObj.getDate();
+    const month = dateObj.getMonth() + 1;
+    const year = dateObj.getFullYear();
+
+    const formattedDate = `${day}/${month}/${year}`;
+    return formattedDate;
+}
+
+function showSelectedDateItems(selectedDate) {
+    let matchFound = false;
+
+    Generated_Total_Date_Set.forEach(date => {
+        if (selectedDate === date) {
+            matchFound = true;
+        }
+        else
+        {
+            document.getElementById("generated_content").innerHTML='';
+            const h1 = document.createElement("h1");
+            h1.textContent="No Records Found!";
+            h1.style.textAlign='center';
+            document.getElementById("generated_content").appendChild(h1);
+        }
+    });
+
+    if (matchFound) {
+        console.log("Match Found!");
+        displayDataForDate(File_Object, selectedDate);
     }
 }
 
