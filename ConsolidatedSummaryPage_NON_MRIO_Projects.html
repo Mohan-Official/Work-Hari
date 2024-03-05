@@ -6,21 +6,6 @@
         <link rel='stylesheet' type='text/css' href='/CSS/style.css'>
         <link rel="stylesheet" href="/CSS/additional_style.css">
         <title>HTML REPORTING</title>
-
-        <style>
-                  .tempdate-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.tempdate-dropdown-content.show {
-  display: block;
-}
-        </style>
     </head>
 <body style='background-color: white;'>
     <br>
@@ -56,8 +41,7 @@
                         <button id="MRIO-btn"  class="button btn-one" onclick="filter_MRIO('MRIO')">MRIO</button>
                         <button id="NON-MRIO-btn" class="button btn-two" onclick="filter_NON_MRIO('NON MRIO')">NON-MRIO</button>
                     </div>
-                </section>
-                
+                </section> 
         </header>
         <table class='header_table' >
             <tr style='color:white;'>
@@ -98,41 +82,5 @@
             </tr>
         </table>
     </div>
-    <br><br>
-    <div class="tempdropdown">
-        <button id="tempdropdownButton">Click me</button>
-        <div class="tempdate-dropdown-content">
-          <!-- Your dropdown content here -->
-          <select>
-            <option value="option1">Option 1</option>
-          </select>
-          <input type="text" placeholder="Enter text">
-        </div>
-      </div>
-
-      <script>
-        document.addEventListener("DOMContentLoaded", function() {
-      const dropdownButton = document.getElementById('tempdropdownButton');
-      const dateDropdownContent = document.querySelector('.tempdate-dropdown-content');
-    
-      // Toggle the dropdown content when the button is clicked
-      dropdownButton.addEventListener('click', function() {
-        const inp = document.createElement('input');
-        inp.type='date';
-        dateDropdownContent.appendChild(inp);
-        dateDropdownContent.classList.toggle('show');
-      });
-    
-      // Close the dropdown if the user clicks outside of it
-      window.addEventListener('click', function(event) {
-        if (!event.target.matches('#tempdropdownButton')) {
-          if (dateDropdownContent.classList.contains('show')) {
-            dateDropdownContent.classList.remove('show');
-          }
-        }
-      });
-    });
-    
-      </script>
 </body>
 </html>

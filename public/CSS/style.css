@@ -1085,7 +1085,8 @@ input[type="date"]
 {
 	letter-spacing: 2px;
 }
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator 
+{
 	/* background: whitesmoke; */
 	font-size: 1rem;
 	position: absolute;
@@ -1094,4 +1095,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 	z-index: 1;
 	width: 110%;
 	color: whitesmoke;
-  }
+}
+#xlsxIcon
+{
+	height: 3rem;
+	width: 3rem;
+	border-radius: 50%;
+	position: relative;
+	top: 35%;
+	left: 0%;
+}
+#xlsxIcon i
+{
+	font-size: 1.2rem;
+	color: whitesmoke;
+}
