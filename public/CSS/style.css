@@ -1081,13 +1081,17 @@ td {
 	display: none;
 	text-align: center;
 }
-.iconStyle
+input[type="date"]
 {
-	content: '\1F4C6'; /* Unicode for calendar icon
-      /* position: absolute; */
-      /* top: 50%; */
-      /* right: 10px;  */
-      /* transform: translateY(-50%); */
-      /* font-size: 20px; */
-	color: whitesmoke;
+	letter-spacing: 2px;
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+	/* background: whitesmoke; */
+	font-size: 1rem;
+	position: absolute;
+	right: 5%;
+	cursor: pointer;
+	z-index: 1;
+	width: 110%;
+	color: whitesmoke;
+  }
